@@ -1,49 +1,50 @@
-# main.py
+import json
+import os
+import io
 from api_handler import fetch_data_from_api
-import io, os, json
 
-#list_of_cities
-file_path = "list_of_cities.txt"
-list_of_cities = []
-with open(file_path, "r") as file:
-    for line in file:
-        list_of_cities.append(line.strip())
+LIST_OF_CITIES_FILE = "list_of_cities.txt"
+DATA_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data')
 
-astronomy_city_data = [] 
-forecast_weather_data = []
-"""
-List of cities obtaining information through rapidAPI data such as:
-1) Sunrise, sunet, moonrise, moonrise, moonset, moon phase and illumation.
-2) Forecast weather API method returns upto next 3 days
-"""
-for cities in list_of_cities:
+def read_list_of_cities(file_path):
+    cities = []
+    with open(file_path, "r") as file:
+        for line in file:
+            cities.append(line.strip())
+    return cities
 
-    #Make API calls
-    api_endpoint_1 = "/astronomy.json?q=" + str(cities)
-    api_endpoint_2 = "/forecast.json?q=" + str(cities) + "&days=3"
+def fetch_astronomy_and_forecast_data(cities):
+    astronomy_city_data = []
+    forecast_weather_data = []
+    
+    for city in cities:
+        api_endpoint_1 = f"/astronomy.json?q={city}"
+        api_endpoint_2 = f"/forecast.json?q={city}&days=3"
 
-    astronomy_city_data.append(fetch_data_from_api(api_endpoint_1))
-    forecast_weather_data.append(fetch_data_from_api(api_endpoint_2))
+        astronomy_data = fetch_data_from_api(api_endpoint_1)
+        forecast_data = fetch_data_from_api(api_endpoint_2)
 
-# Get the path of the 'data' folder in the root directory
-data_folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data')
-                                
-# Create the 'data' folder if it doesn't exist
-if not os.path.exists(data_folder_path):
-    os.makedirs(data_folder_path)
+        astronomy_city_data.append(json.loads(astronomy_data))
+        forecast_weather_data.append(json.loads(forecast_data))
+    
+    return astronomy_city_data, forecast_weather_data
 
-# Save list as JSON file
-astronomy_city_data_json = json.dumps(astronomy_city_data, indent=4)
-list_file_path_1 = os.path.join(data_folder_path, "astronomy_city_data.json")
-with io.open(list_file_path_1, 'w', encoding='utf-8') as file:
-    file.write(astronomy_city_data_json)
+def save_json_to_file(data, filename):
+    file_path = os.path.join(DATA_FOLDER, filename)
+    data_json = json.dumps(data, indent=2)
+    with io.open(file_path, 'w', encoding='utf-8') as file:
+        file.write(data_json)
+    print(f"Saved {filename} to {file_path}")
 
-print(f"Saved Astronomy data to {list_file_path_1}")
+def main():
+    list_of_cities = read_list_of_cities(LIST_OF_CITIES_FILE)
+    astronomy_city_data, forecast_weather_data = fetch_astronomy_and_forecast_data(list_of_cities)
+    
+    if not os.path.exists(DATA_FOLDER):
+        os.makedirs(DATA_FOLDER)
+    
+    save_json_to_file(astronomy_city_data, "astronomy_city_data.json")
+    save_json_to_file(forecast_weather_data, "forecast_weather_data.json")
 
-# Save list as JSON file
-forecast_weather_data_json = json.dumps(forecast_weather_data, indent=4)
-list_file_path_2 = os.path.join(data_folder_path, "forecast_weather_data_json.json")
-with io.open(list_file_path_2, 'w', encoding='utf-8') as file:
-    file.write(forecast_weather_data_json)
-
-print(f"Saved Forecast data to {list_file_path_2}")
+if __name__ == "__main__":
+    main()
