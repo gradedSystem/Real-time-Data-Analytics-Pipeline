@@ -1,50 +1,29 @@
+# Libraries
 import json
-import os
-import io
 from api_handler import fetch_data_from_api
+from pathlib import Path
 
-LIST_OF_CITIES_FILE = "list_of_cities.txt"
-DATA_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data')
+directory = Path("path/to/your/directory")
+COORDINATES_FILE = "coordinates.txt"
 
-def read_list_of_cities(file_path):
-    cities = []
+# Function to read list of coordinates from a file
+def read_list_of_coordinates(file_path):
+    coordinates = []
     with open(file_path, "r") as file:
         for line in file:
-            cities.append(line.strip())
-    return cities
+            lat, lon = line.strip().split(",")
+            coordinates.append((float(lat), float(lon)))
+    return coordinates
 
-def fetch_astronomy_and_forecast_data(cities):
-    astronomy_city_data = []
-    forecast_weather_data = []
+# Function to fetch astronomy and forecast data for given coordinates
+def fetch_astronomy_and_forecast_data(coordinates):
+    real_time_data = []
     
-    for city in cities:
-        api_endpoint_1 = f"/astronomy.json?q={city}"
-        api_endpoint_2 = f"/forecast.json?q={city}&days=3"
-
-        astronomy_data = fetch_data_from_api(api_endpoint_1)
-        forecast_data = fetch_data_from_api(api_endpoint_2)
-
-        astronomy_city_data.append(json.loads(astronomy_data))
-        forecast_weather_data.append(json.loads(forecast_data))
+    for coord in coordinates:
+        lat, lon = coord
+        api_endpoint = f"/current.json?q={lat}%2C{lon}"
+        fetch_data = fetch_data_from_api(api_endpoint)
+        real_time_data.append(json.loads(fetch_data))
     
-    return astronomy_city_data, forecast_weather_data
-
-def save_json_to_file(data, filename):
-    file_path = os.path.join(DATA_FOLDER, filename)
-    data_json = json.dumps(data, indent=2)
-    with io.open(file_path, 'w', encoding='utf-8') as file:
-        file.write(data_json)
-    print(f"Saved {filename} to {file_path}")
-
-def main():
-    list_of_cities = read_list_of_cities(LIST_OF_CITIES_FILE)
-    astronomy_city_data, forecast_weather_data = fetch_astronomy_and_forecast_data(list_of_cities)
-    
-    if not os.path.exists(DATA_FOLDER):
-        os.makedirs(DATA_FOLDER)
-    
-    save_json_to_file(astronomy_city_data, "astronomy_city_data.json")
-    save_json_to_file(forecast_weather_data, "forecast_weather_data.json")
-
-if __name__ == "__main__":
-    main()
+    return real_time_data
+print(read_list_of_coordinates(COORDINATES_FILE))

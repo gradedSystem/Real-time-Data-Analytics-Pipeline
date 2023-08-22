@@ -17,3 +17,5 @@ parts
 src/*.egg-info
 lib
 lib64
+#In order to hide sensitive data
+.env
