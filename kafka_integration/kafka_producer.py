@@ -37,11 +37,9 @@ def main():
     producer = configure_producer(KAFKA_BROKER)
     try:
         while True:
-            coordinates = api_main.read_list_of_coordinates(api_main.COORDINATES_FILE)
-            astronomy_city_data = api_main.fetch_astronomy_and_forecast_data(coordinates)
+            astronomy_city_data = api_main.fetch_astronomy_and_forecast_data(api_main.COORDINATES_FILE)
 
-            for data_point in astronomy_city_data:
-                send_data_to_kafka(producer, data_point)
+            send_data_to_kafka(producer, astronomy_city_data[0])
             
             time.sleep(30 * 60)  # Wait for 30 minutes
 
