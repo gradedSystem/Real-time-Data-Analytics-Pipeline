@@ -55,7 +55,7 @@ if __name__ == '__main__':
                 location_json = json.dumps(product[entries[counter]]['current']).encode('utf-8')
                 producer.produce(topics[1], key=json.dumps(entry).encode('utf-8'), value=location_json, callback=delivery_callback)
                 time.sleep(2)
-            time.sleep(600)
+            time.sleep(30)
         except KeyboardInterrupt:
             print("Received KeyboardInterrupt. Exiting gracefully.")
             # Block until the messages are sent.
