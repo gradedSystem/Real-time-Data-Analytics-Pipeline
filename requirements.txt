@@ -1,0 +1,7 @@
+configparser==6.0.0
+confluent-kafka==2.2.0
+kafka-python==2.0.2
+requests==2.31.0
+virtualenv==20.24.4
+pyspark==3.24
+
