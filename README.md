@@ -12,7 +12,7 @@ Develop a streaming data pipeline that retrieves data from an API in the English
   <img src="https://github.com/gradedSystem/Real-time-Data-Analytics-Pipeline/raw/main/images/Kafka_project.png" alt="Kafka Project">
 </p>
 
-![Kafka Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Apache_kafka.svg/1280px-Apache_kafka.svg.png)
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Apache_kafka.svg/480px-Apache_kafka.svg.png" alt="Kafka Logo" width="240">
 
 This repository contains a real-time data analytics pipeline built using Apache Kafka.
 
