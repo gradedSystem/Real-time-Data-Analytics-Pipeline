@@ -20,7 +20,7 @@ lib64
 #In order to hide sensitive data
 *.env
 *.pem
-
+conf.ini
 # Local .terraform directories
 **/.terraform/*
 
