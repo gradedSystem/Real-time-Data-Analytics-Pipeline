@@ -12,7 +12,10 @@ Develop a streaming data pipeline that retrieves data from an API in the English
   <img src="https://github.com/gradedSystem/Real-time-Data-Analytics-Pipeline/raw/main/images/Kafka_project.png" alt="Kafka Project">
 </p>
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Apache_kafka.svg/480px-Apache_kafka.svg.png" alt="Kafka Logo" width="240">
+## Technologies Used
+| ![Kafka Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Apache_kafka.svg/480px-Apache_kafka.svg.png) | ![Confluent Logo](https://www.confluent.io/wp-content/uploads/confluent-logo-300-2.png) | ![Python Logo](https://www.python.org/static/community_logos/python-logo.png) | ![AWS S3 Logo](https://aws.amazon.com/images/partner/07_Security/LOGOS/AmazonS3_Logo_SVG.svg) |
+|:---:|:---:|:---:|:---:|
+| Apache Kafka | Confluent | Python | AWS S3 |
 
 This repository contains a real-time data analytics pipeline built using Apache Kafka.
 
