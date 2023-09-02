@@ -11,3 +11,90 @@ Develop a streaming data pipeline that retrieves data from an API in the English
 <p align="center">
   <img src="https://github.com/gradedSystem/Real-time-Data-Analytics-Pipeline/raw/main/images/Kafka_project.png" alt="Kafka Project">
 </p>
+
+![Kafka Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Apache_kafka.svg/1280px-Apache_kafka.svg.png)
+
+This repository contains a real-time data analytics pipeline built using Apache Kafka.
+
+## Technologies Used
+
+- **Apache Kafka**: A distributed event streaming platform used for building real-time data pipelines and streaming applications.
+
+- **Virtualenv**: A tool to create isolated Python environments.
+
+- **Confluent Kafka Python Client**: A Python client for Apache Kafka provided by Confluent.
+
+## Confluent Setup
+
+Before running the Kafka producers and consumers, you need to set up your Confluent environment.
+
+1. Create a virtual environment and activate it:
+
+    ```shell
+    virtualenv env
+    source env/bin/activate
+    ```
+
+2. Install the Confluent Kafka Python client:
+
+    ```shell
+    pip install confluent-kafka
+    ```
+
+3. Configure your `file.ini` with your Confluent Cloud API keys and cluster settings:
+
+    ```ini
+    [default]
+    bootstrap.servers=<BOOTSTRAP SERVER>
+    security.protocol=SASL_SSL
+    sasl.mechanisms=PLAIN
+    sasl.username=<CLUSTER API KEY>
+    sasl.password=<CLUSTER API SECRET>
+
+    [consumer]
+    group.id=python_example_group_1
+
+    auto.offset.reset=earliest
+    ```
+
+## How to Run
+
+To run the Kafka producers and consumers, follow these steps:
+
+### For Producer
+
+1. Make the producer script executable:
+
+    ```shell
+    chmod u+x producer.py
+    ```
+
+2. Run the producer script with your `file.ini`:
+
+    ```shell
+    ./producer.py file.ini
+    ```
+
+### For Consumer
+
+1. Make the consumer script executable:
+
+    ```shell
+    chmod u+x consumer.py
+    ```
+
+2. Run the consumer script with your `file.ini`:
+
+    ```shell
+    ./consumer.py file.ini
+    ```
+
+Make sure to run producers and consumers in separate git bash instances.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Thanks to the Apache Kafka and Confluent communities for their excellent tools and documentation.
