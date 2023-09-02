@@ -24,7 +24,7 @@ This repository contains a real-time data analytics pipeline built using Apache 
 
 - **Virtualenv**: A tool to create isolated Python environments.
 
-- **Confluent Kafka Python Client**: A Python client for Apache Kafka provided by Confluent.
+- **Confluent Apache Kafka Cloud Provider**: A Cloud Provider for Apache Kafka provided by Confluent.
 
 ## Confluent Setup
 
